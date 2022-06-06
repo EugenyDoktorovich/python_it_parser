@@ -61,9 +61,12 @@ def dbsaver():
     sqlite_select_query = """SELECT * from news4"""
     cursor.execute(sqlite_select_query)
     records = cursor.fetchall()
+    count = 0
     for row in records:
         print("Описание:", row[0])
         print("Ссылка:", row[1])
+        count+=1
+    print('Всего записей в таблице: ',count,'.')
 
 
 #Here I call a function in an infinite loop, and set a delay of 24 hours using the time module
