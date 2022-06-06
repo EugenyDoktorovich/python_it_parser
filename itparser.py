@@ -42,20 +42,27 @@ def sql_table(con):
     cursorObj = con.cursor()
  
     cursorObj.execute("CREATE TABLE news4( описание text, ссылка text)")
- 
+    print('Таблица успешно создана.')
     con.commit()
  
-con = sql_connection()
-cursor = con.cursor()
 
-news_dict = newsParser()
-for news in news_dict:
-    cursor.execute("INSERT INTO news4 VALUES('{0}','{1}')".format(news,news_dict[news])) 
+def dbsaver():
+    con = sql_connection()
+    print('Подключение к БД успешно.')
+    cursor = con.cursor()
+    print('Курсор создан успешно.')
+
+    news_dict = newsParser()
+    for news in news_dict:
+        cursor.execute("INSERT INTO news4 VALUES('{0}','{1}')".format(news,news_dict[news])) 
+    print('Данные добавлены в БД.')
+
+    sqlite_select_query = """SELECT * from news4"""
+    cursor.execute(sqlite_select_query)
+    records = cursor.fetchall()
+    for row in records:
+        print("Описание:", row[0])
+        print("Ссылка:", row[1])
 
 
-sqlite_select_query = """SELECT * from news4"""
-cursor.execute(sqlite_select_query)
-records = cursor.fetchall()
-for row in records:
-    print("Описание:", row[0])
-    print("Ссылка:", row[1])
+dbsaver()
