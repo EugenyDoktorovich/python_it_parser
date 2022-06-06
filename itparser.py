@@ -1,11 +1,12 @@
 from wsgiref import headers
 import requests
 from bs4 import BeautifulSoup as bs
+import time
 
 import sqlite3
 from sqlite3 import Error
 
-#Сбор инфы
+#Parsing with requests & bf4
 def newsParser():
     url = 'https://ria.ru/technology/'
     news_dict = {}
@@ -23,7 +24,7 @@ def newsParser():
     
     return news_dict
 
-#БД
+#Initialization and work with the database sqlite3
 
 def sql_connection():
  
@@ -37,7 +38,7 @@ def sql_connection():
  
         print(Error)
  
-def sql_table(con):
+def sql_table(con): 
  
     cursorObj = con.cursor()
  
@@ -65,4 +66,12 @@ def dbsaver():
         print("Ссылка:", row[1])
 
 
-dbsaver()
+#Here I call a function in an infinite loop, and set a delay of 24 hours using the time module
+while True:
+    dbsaver()
+    print('''Данные успешно спарсились и добавлены в базу данных, следуюущее обновление через сутки.
+    Чтобы прервать работу программы надо нажать ctr+c, по крайней мере в VScode''')
+    time.sleep(86400)
+    
+
+
