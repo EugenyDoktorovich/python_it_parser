@@ -6,7 +6,7 @@ import time
 import sqlite3
 from sqlite3 import Error
 
-#Parsing with requests & bf4
+#Parsing with requests & bf4##
 def newsParser():
     url = 'https://ria.ru/technology/'
     news_dict = {}
