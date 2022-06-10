@@ -56,8 +56,25 @@ def dbsaver():
     news_dict = newsParser()
     for news in news_dict:
         cursor.execute("INSERT INTO news4 VALUES(?, ?)",(news,news_dict[news])) 
+        con.commit()
     print('Данные добавлены в БД.')
 
+    sqlite_select_query = """SELECT * from news4"""
+    cursor.execute(sqlite_select_query)
+    records = cursor.fetchall()
+    count = 0
+    for row in records:
+        print("Описание:", row[0])
+        print("Ссылка:", row[1])
+        count+=1
+    con.close()
+    print('Всего записей в таблице: ',count,'.')
+
+
+
+def recordNum():
+    con = sql_connection()
+    cursor = con.cursor()
     sqlite_select_query = """SELECT * from news4"""
     cursor.execute(sqlite_select_query)
     records = cursor.fetchall()
@@ -69,12 +86,16 @@ def dbsaver():
     print('Всего записей в таблице: ',count,'.')
 
 
+
 #Here I call a function in an infinite loop, and set a delay of 24 hours using the time module
 while True:
     dbsaver()
     print('''Данные успешно спарсились и добавлены в базу данных, следуюущее обновление через сутки.
     Чтобы прервать работу программы надо нажать ctr+c, по крайней мере в VScode''')
     time.sleep(86400)
+
+
+
     
 
 
