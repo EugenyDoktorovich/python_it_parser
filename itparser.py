@@ -21,7 +21,7 @@ def newsParser():
 
     for title in news_name:
         news_dict[title.string] = title['href']
-    
+        
     return news_dict
 
 #Initialization and work with the database sqlite3
@@ -55,7 +55,7 @@ def dbsaver():
 
     news_dict = newsParser()
     for news in news_dict:
-        cursor.execute("INSERT INTO news4 VALUES('{0}','{1}')".format(news,news_dict[news])) 
+        cursor.execute("INSERT INTO news4 VALUES(?, ?)",(news,news_dict[news])) 
     print('Данные добавлены в БД.')
 
     sqlite_select_query = """SELECT * from news4"""
